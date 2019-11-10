@@ -1,0 +1,25 @@
+<launch>
+  <node pkg="mocap_vicon"
+    type="mocap_vicon_node"
+    name="vicon"
+    output="screen">
+    <param name="server_address" value="128.238.38.89"/>
+    <param name="frame_rate" value="100"/>
+    <param name="max_accel" value="10.0"/>
+    <param name="publish_tf" value="false"/>
+    <param name="fixed_frame_id" value="mocap"/>
+    <rosparam param="model_list">
+    []
+    </rosparam>
+    <remap from="/vicon/attach_1/odom" to="/dragonfly6/attach"/>
+    <remap from="/vicon/attach_2/odom" to="/dragonfly2/attach"/>
+    <remap from="/vicon/attach_3/odom" to="/dragonfly3/attach"/>
+    <!--remap from="/vicon/attach_1/pose" to="/dragonfly6/attach"/-->
+    <!--remap from="/vicon/attach_2/pose" to="/dragonfly2/attach"/-->
+    <!--remap from="/vicon/attach_3/pose" to="/dragonfly3/attach"/-->
+    <remap from="/vicon/dragonfly_6/odom" to="/dragonfly6/odom"/>
+    <remap from="/vicon/dragonfly_2/odom" to="/dragonfly2/odom"/>
+    <remap from="/vicon/dragonfly_3/odom" to="/dragonfly3/odom"/>
+    <remap from="/vicon/payload/odom" to="/payload/odom"/>
+  </node>
+</launch>
