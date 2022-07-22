@@ -45,7 +45,7 @@ bool ViconDriver::init() {
     Matrix<double, 6, 6>::Identity()*dt*max_accel;
   process_noise *= process_noise; // Make it a covariance
   measurement_noise =
-    Matrix<double, 6, 6>::Identity()*1e-3;
+    Matrix<double, 6, 6>::Identity()*5e-3; //1e-3
   measurement_noise *= measurement_noise; // Make it a covariance
   model_set.insert(model_list.begin(), model_list.end());
 
@@ -89,6 +89,9 @@ bool ViconDriver::init() {
   ts_sleep.tv_sec = 0;
   ts_sleep.tv_nsec = 100000000;
   nanosleep(&ts_sleep, NULL);
+
+  // initialize the last_time for evaluate frame frequency
+  last_time = ros::Time::now().toSec();
 
   return true;
 }
@@ -187,6 +190,17 @@ void ViconDriver::handleSubject(const int& sub_idx) {
   double time = ros::Time::now().toSec();
   subjects[subject_name]->processNewMeasurement(time, m_att, m_pos);
   //read_lock.unlock();
+
+  // Check the frequency
+  counter++;
+  if (counter == window_size){
+    double dt = (time-last_time)/window_size;
+    if (dt > 1.2*frame_interval)
+        ROS_WARN("The current odom frequency is %4.5f, less than %s of preset one, CAUTION", 1/dt, "80%");
+
+    counter = 0;
+    last_time = time;
+  }
 
 
   // Publish tf if requred

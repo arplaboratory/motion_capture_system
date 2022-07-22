@@ -3,12 +3,12 @@
     type="mocap_vicon_node"
     name="vicon"
     output="screen">
-    <param name="server_address" value=""/>
+    <param name="server_address" value="128.238.38.89"/>
     <param name="frame_rate" value="100"/>
     <param name="max_accel" value="10.0"/>
     <param name="publish_tf" value="false"/>
     <param name="fixed_frame_id" value="mocap"/>
     <rosparam param="model_list">[]</rosparam>
-    <!--remap from="vicon/model_name/odom" to="/model_name/odom"/-->
+    <remap from="/vicon/dragonflypro2/odom" to="/dragonPro2/odom"/>
   </node>
 </launch>
