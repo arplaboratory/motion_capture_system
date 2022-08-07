@@ -33,7 +33,7 @@ include_directories(
 
 
 if(NOT APPLE)
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -Wall")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++17 -Wall")
 
 # QUALISYS
 add_library(mocap_qualisys_driver

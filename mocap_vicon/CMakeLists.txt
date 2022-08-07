@@ -13,7 +13,7 @@ find_package(catkin REQUIRED COMPONENTS
   mocap_base
 )
 
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -Wall")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++17 -Wall")
 
 catkin_package(
   INCLUDE_DIRS include

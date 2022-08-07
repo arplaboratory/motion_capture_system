@@ -8,6 +8,8 @@ find_package(Eigen3 REQUIRED)
 find_package(catkin REQUIRED COMPONENTS
   roscpp
   geometry_msgs
+  nav_msgs
+  tf
   eigen_conversions
 )
 
@@ -26,7 +28,7 @@ include_directories(
   ${EIGEN3_INCLUDE_DIRS}
 )
 
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -Wall")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++17 -Wall")
 
 add_library(mocap_kalman_filter
   src/KalmanFilter.cpp
