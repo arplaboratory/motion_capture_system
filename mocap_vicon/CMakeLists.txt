@@ -50,3 +50,6 @@ target_link_libraries(mocap_vicon_node
   mocap_vicon_driver
   ${catkin_LIBRARIES}
 )
+catkin_install_python(PROGRAMS scripts/publish_path.py
+  DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
+)
