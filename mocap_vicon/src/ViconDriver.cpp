@@ -225,7 +225,7 @@ namespace mocap
 
             stamped_transform.header.stamp = t3;
             stamped_transform.header.frame_id = fixed_frame_id;
-            stamped_transform.child_frame_id = subject_name;
+            stamped_transform.child_frame_id = subject_name + "/base_link";
 
             stamped_transform.transform.translation.x = pos(0);
             stamped_transform.transform.translation.y = pos(1);
@@ -236,7 +236,6 @@ namespace mocap
             stamped_transform.transform.rotation.y = att.y();
             stamped_transform.transform.rotation.z = att.z();
 
-            
             write_lock.lock();                       
             tf_publisher->sendTransform(stamped_transform);
             write_lock.unlock();
