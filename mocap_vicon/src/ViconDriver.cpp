@@ -224,7 +224,7 @@ namespace mocap
             geometry_msgs::msg::TransformStamped stamped_transform;
 
             stamped_transform.header.stamp = t3;
-            stamped_transform.header.frame_id = subject_name + fixed_frame_id;
+            stamped_transform.header.frame_id = subject_name + "/" + fixed_frame_id;
             stamped_transform.child_frame_id = subject_name + "/base_link";
 
             stamped_transform.transform.translation.x = pos(0);
