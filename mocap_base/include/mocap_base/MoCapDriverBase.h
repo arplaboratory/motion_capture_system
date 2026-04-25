@@ -122,8 +122,11 @@ namespace mocap
       // destructor
       ~MoCapDriverBase() {return;}
 
-      // init Initialize the object & return True if successfully initialized
-      virtual bool init() = 0;
+      // init Initialize the object & return True if successfully initialized.
+      // node: the rclcpp::Node whose parameter server should be used to read
+      //       configuration (e.g. server_address, frame_rate).  Pass the outer
+      //       executable node so that launch-file / CLI overrides are visible.
+      virtual bool init(rclcpp::Node& node) = 0;
 
       // run Start acquiring data from the server once
       virtual void run() = 0;

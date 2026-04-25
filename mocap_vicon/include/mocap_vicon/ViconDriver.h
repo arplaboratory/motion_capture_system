@@ -54,7 +54,11 @@ namespace mocap
             }
 
             // init Initialize the object & return True if successfully initialized
-            bool init();
+            // node: the rclcpp::Node whose parameter server holds the launch-file
+            //       parameters (e.g. server_address, frame_rate, …).  Pass the
+            //       outer ViconNode's *this* so that remapped launch arguments are
+            //       visible even though ViconDriver is itself a separate Node.
+            bool init(rclcpp::Node& node);
 
             // run Start acquiring data from the server
             void run();
