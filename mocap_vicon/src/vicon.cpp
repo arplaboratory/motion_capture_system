@@ -16,14 +16,10 @@ class ViconNode : public rclcpp::Node
     public:
         ViconNode() : Node("vicon_node")
         {
-            this->declare_parameter("frame_rate", 100);
-            this->get_parameter("frame_rate", frame_rate);
-
-            double time_interval = 1.0/static_cast<double>(frame_rate);
-            time_interval = time_interval*1000;
-            //int time = (int)time_interval;
-            
-            if(!driver.init())
+            // Parameters are declared and read inside driver.init(*this), which
+            // uses this node's parameter server so that launch-file overrides
+            // (e.g. frame_rate, server_address) are correctly applied.
+            if(!driver.init(*this))
             {
                 RCLCPP_ERROR(this->get_logger(), "Initialization of the Vicon driver failed");
                 exit(1);
@@ -47,7 +43,6 @@ class ViconNode : public rclcpp::Node
         {
             driver.run();
         }
-        int frame_rate;
         mocap::ViconDriver driver;
         rclcpp::TimerBase::SharedPtr timer;
         rclcpp::Publisher<std_msgs::msg::String>::SharedPtr publisher;

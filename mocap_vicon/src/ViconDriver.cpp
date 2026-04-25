@@ -6,26 +6,30 @@ namespace ViconSDK = ViconDataStreamSDK::CPP;
 
 namespace mocap
 {
-    bool ViconDriver::init()
+    bool ViconDriver::init(rclcpp::Node& node)
     {
-       
-        this->declare_parameter("server_address", string("alkaline2"));
-        this->get_parameter("server_address", server_address);
+        // Read all parameters from the supplied node (the outer ViconNode), not
+        // from *this ("vicon_driver"), so that values set via the launch file or
+        // CLI are honoured.  ViconDriver inherits from MoCapDriverBase which is
+        // itself a separate rclcpp::Node ("vicon_driver"), so ROS 2 parameter
+        // scoping would otherwise hide any launch-file overrides.
+        node.declare_parameter("server_address", string("192.154.4.124"));
+        node.get_parameter("server_address", server_address);
 
-        this->declare_parameter("model_list", vector<string>(0));
-        this->get_parameter("model_list", model_list);
+        node.declare_parameter("model_list", vector<string>(0));
+        node.get_parameter("model_list", model_list);
 
-        this->declare_parameter("frame_rate", 100);
-        this->get_parameter("frame_rate", frame_rate);
+        node.declare_parameter("frame_rate", 100);
+        node.get_parameter("frame_rate", frame_rate);
 
-        this->declare_parameter("max_accel", 10.0);
-        this->get_parameter("max_accel", max_accel);
+        node.declare_parameter("max_accel", 10.0);
+        node.get_parameter("max_accel", max_accel);
 
-        this->declare_parameter("publish_tf", false);
-        this->get_parameter("publish_tf", publish_tf);
+        node.declare_parameter("publish_tf", false);
+        node.get_parameter("publish_tf", publish_tf);
 
-        this->declare_parameter("fixed_frame_id", string("mocap"));
-        this->get_parameter("fixed_frame_id", fixed_frame_id);
+        node.declare_parameter("fixed_frame_id", string("mocap"));
+        node.get_parameter("fixed_frame_id", fixed_frame_id);
         
         frame_interval = 1.0 / static_cast<double>(frame_rate);
         double& dt = frame_interval;
